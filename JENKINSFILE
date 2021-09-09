@@ -1,0 +1,44 @@
+pipeline{
+    agent any
+    environment{
+        version= getDockerTag()
+    }
+    stages{
+        stage('Build docker image'){
+            steps{
+                sh "docker build . -t pavancool7/newapp:${version}"
+            }
+        }
+        stage('Push docker file to Docker Hub'){
+            steps{
+                withCredentials([string(credentialsId: 'docker-hub-pass', variable: 'dockerpass')]) {
+                sh "docker login -u pavancool7 -p ${dockerpass}"
+                sh "docker push pavancool7/mydata-app:${version}"
+                }   
+            }
+        }
+        /*stage('change version'){
+            steps{
+                sh "chmod +x verchange.sh"
+                sh "./verchange.sh ${version}"
+                sh "cat myapp1.yml"
+                //script{
+                  //  configs:'myapp1.yml',
+                   // kubeconfigid:"my-k8s-config"
+                   // enableConfigSubstitution: true
+               // }
+            }
+        stage('kubernetes Deployment'){
+            steps{
+                withCredentials([sshUserPrivateKey(credentialsId: 'myssh', keyFileVariable: 'mysshkey')]) {
+                sh "scp myapp1.yml -u ec2-user -p mysshkey 18.116.80.211:/home/ece-user"
+                } 
+            }
+        } */  
+    }
+}
+}
+def getDockerTag(){
+    def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+    return tag
+    }
