@@ -13,28 +13,17 @@ pipeline{
             steps{
                 withCredentials([string(credentialsId: 'docker-hub-pass', variable: 'dockerpass')]) {
                 sh "docker login -u pavancool7 -p ${dockerpass}"
-                sh "docker push pavancool7/newapp:${version}"
+                sh "docker push pavancool7/mydata-app:${version}"
                 }   
             }
         }
-        /*stage('change version'){
+        stage('Deploy to kubernetes'){
             steps{
                 sh "chmod +x verchange.sh"
                 sh "./verchange.sh ${version}"
-                sh "cat myapp1.yml"
-                //script{
-                  //  configs:'myapp1.yml',
-                   // kubeconfigid:"my-k8s-config"
-                   // enableConfigSubstitution: true
-               // }
+                sh "scp myapp.yml ubuntu@3.136.86.221"
             }
-        stage('kubernetes Deployment'){
-            steps{
-                withCredentials([sshUserPrivateKey(credentialsId: 'myssh', keyFileVariable: 'mysshkey')]) {
-                sh "scp myapp1.yml -u ec2-user -p mysshkey 18.116.80.211:/home/ece-user"
-                } 
-            }
-        } */  
+        }
     }
 }
 def getDockerTag(){
