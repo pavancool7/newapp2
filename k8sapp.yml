@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: pavancool7/newapp:1.0
+        image: pavancool7/newapp:tagversion
         ports:
         - containerPort: 80
           
