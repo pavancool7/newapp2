@@ -19,7 +19,8 @@ pipeline{
         }
         stage('Deploy to kubernetes'){
             steps{
-                sh "ping 3.136.86.221"
+                sh "ssh ubuntu@3.136.86.221"
+                sh "mkdir hello.txt"
             }
         }
     }
