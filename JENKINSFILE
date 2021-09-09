@@ -20,7 +20,7 @@ pipeline{
         stage('Deploy to kubernetes'){
             steps{
                 sh "ssh ubuntu@3.136.86.221"
-                sh "touch /home/ubuntu/hello.txt"
+                sh "sudo touch /home/ubuntu/hello.txt"
             }
         }
     }
