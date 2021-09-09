@@ -19,7 +19,10 @@ pipeline{
         }
         stage('Deploy to kubernetes'){
             steps{
-                sh "ssh ubuntu@3.136.86.221 docker run -d -p 8080:8080 -p50000:50000 jenkins/jenkins:lts"
+                //sh "ssh ubuntu@3.136.86.221 docker run -d -p 8080:8080 -p50000:50000 jenkins/jenkins:lts"
+                sh "chmod +x verchange.sh"
+                sh "./verchange.sh ${version}"
+                sh "cat myapp.yml"
             }
         }
     }
