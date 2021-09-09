@@ -23,6 +23,7 @@ pipeline{
                 sh "chmod +x verchange.sh"
                 sh "./verchange.sh ${version}"
                 sh "cat myapp.yml"
+                sh "scp myapp.yml ubuntu@3.136.86.221:~/"
             }
         }
     }
